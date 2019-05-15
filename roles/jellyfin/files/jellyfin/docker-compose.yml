@@ -8,3 +8,7 @@ services:
       - /mnt/jellyfin_data/media:/media
     ports:
       - "127.0.0.1:8096:8096"
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 2s
