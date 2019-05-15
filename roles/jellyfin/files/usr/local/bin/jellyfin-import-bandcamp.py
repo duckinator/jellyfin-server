@@ -12,17 +12,22 @@ def extract_zipfile(artist, album, path):
     directory = Path(base, artist, album)
     directory.mkdir(parents=True, exist_ok=True)
 
+    print("Extracting: {}/{}".format(artist, album))
     with ZipFile(path) as zf:
         zf.extractall(directory)
 
+def extract_zipfile_infer(path):
+    filename = Path(path).resolve()
+    parts = filename.with_suffix('').name.split(' - ')
+    extract_zipfile(parts[0], parts[1], filename)
+
 if __name__ == '__main__':
-    if len(sys.argv) != 4 and len(sys.argv) != 2:
-        print('Usage: import-bandcamp.py "Artist Name" "Album Name" /path/to/some_file.zip')
-        print('   or: import-bandcamp.py /path/to/some_file.zip')
-        print('Where the latter has a filename of the format "Artist Name - Album Name.zip"')
-    elif len(sys.argv) == 2:
-        filename = Path(sys.argv[1]).resolve()
-        parts = filename.with_suffix('').name.split(' - ')
-        extract_zipfile(parts[0], parts[1], filename)
+    if len(sys.argv) == 5 and sys.argv[1] == '--metadata':
+        extract_zipfile(sys.argv[2], sys.argv[3], sys.argv[4])
+    elif len(sys.argv) >= 2:
+        for arg in sys.argv[1:]:
+            extract_zipfile_infer(arg)
     else:
-        extract_zipfile(sys.argv[1], sys.argv[2], sys.argv[3])
+        print('Usage: import-bandcamp.py --metadata "Artist Name" "Album Name" /path/to/some_file.zip')
+        print('   or: import-bandcamp.py /path/to/some_file.zip /path/to/some_other_file.zip')
+        print('Where the latter has filenames of the format "Artist Name - Album Name.zip"')
