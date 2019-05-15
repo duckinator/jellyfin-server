@@ -20,7 +20,7 @@
     path: "{{ item }}"
     owner: jellyfin
     state: directory
-  with:
+  with_items:
     - /mnt/jellyfin_data/config
     - /mnt/jellyfin_data/cache
     - /mnt/jellyfin_data/media
