@@ -19,10 +19,11 @@
     src: jellyfin/
     dest: /usr/local/jellyfin/
 
-- name: Create jellyfin config directory
+- name: Create jellyfin directories
   file:
-    path: {{ item }}
+    path: "{{ item }}"
     owner: jellyfin
+    state: directory
   with:
     - /mnt/jellyfin_data/config
     - /mnt/jellyfin_data/cache
