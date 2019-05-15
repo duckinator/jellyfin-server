@@ -11,6 +11,11 @@
     src: ./etc
     dest: /
 
+- name: Remove /etc/nginx/sites-enabled/default
+  file:
+    src: /etc/nginx/sites-enabled/default
+    state: absent
+
 - name: Run certbot
   command: /usr/bin/certbot -n --agree-tos --nginx -d media.smallest.dog -m me@duckie.co
   args:
