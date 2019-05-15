@@ -10,6 +10,11 @@
     src: etc/
     dest: /etc/
 
+- name: Install custom Jellyfin helper scripts
+  synchronize:
+    src: usr/
+    dest: /usr/
+
 - name: Install Jellyfin config and scripts
   synchronize:
     src: jellyfin/
