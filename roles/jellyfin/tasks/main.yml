@@ -1,9 +1,5 @@
 - name: Install required python modules for Ansible
-  pip:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - docker-compose
+  command: pip3 install docker-compose
 
 - name: Add Jellyfin user
   user:
