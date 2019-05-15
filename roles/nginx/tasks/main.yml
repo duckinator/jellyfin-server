@@ -1,0 +1,29 @@
+- name: Install Nginx and Certbot
+  package:
+    name:
+      - nginx
+      - certbot
+      - python3-certbot-nginx
+    state: present
+
+- name: Install Nginx config
+  copy:
+    src: ./etc
+    dest: /
+
+- name: Run certbot
+  command: /usr/bin/certbot -n --agree-tos --nginx -d media.smallest.dog -m me@duckie.co
+  args:
+    creates: /etc/letsencrypt/live/media.smallest.dog/fullchain.pem
+
+- name: Add Certbot cron job
+  cron:
+    name: "run certbot"
+    hour: 12
+    job: "/usr/bin/certbot renew --quiet"
+
+- name: Enable and start Nginx service
+  systemd:
+    name: nginx
+    enabled: yes
+    state: started

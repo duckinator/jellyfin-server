@@ -1,0 +1,29 @@
+- name: Install required python modules for Ansible
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker-compose
+
+- name: Add Jellyfin user
+  user:
+    name: jellyfin
+
+- name: Install Jellyfin/Nginx config
+  synchronize:
+    src: etc/
+    dest: /etc/
+
+- name: Install Jellyfin config and scripts
+  synchronize:
+    src: jellyfin/
+    dest: /usr/local/jellyfin/
+
+- name: Create jellyfin config directory
+  file:
+    path: {{ item }}
+    owner: jellyfin
+  with:
+    - /mnt/jellyfin_data/config
+    - /mnt/jellyfin_data/cache
+    - /mnt/jellyfin_data/media

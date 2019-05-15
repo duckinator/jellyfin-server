@@ -1,0 +1,9 @@
+version: "3"
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:10.3.2
+    network_mode: "host"
+    volumes:
+      - /mnt/jellyfin_data/config:/config
+      - /mnt/jellyfin_data/cache:/cache
+      - /mnt/jellyfin_data/media:/media
