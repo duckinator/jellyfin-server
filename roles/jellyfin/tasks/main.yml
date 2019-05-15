@@ -19,7 +19,7 @@
     src: jellyfin/
     dest: /usr/local/jellyfin/
 
-- name: Create jellyfin directories
+- name: Create Jellyfin directories
   file:
     path: "{{ item }}"
     owner: jellyfin
@@ -28,3 +28,18 @@
     - /mnt/jellyfin_data/config
     - /mnt/jellyfin_data/cache
     - /mnt/jellyfin_data/media
+
+- name: Enable Jellyfin Nginx config
+  file:
+    src: /etc/nginx/sites-available/media.smallest.dog
+    dest: /etc/nginx/sites-enabled/media.smallest.dog
+    state: link
+
+- name: Check Nginx config
+  command: nginx -t
+
+- name: Restart Nginx
+  systemd:
+    name: nginx
+    state: restarted
+    daemon_reload: yes
