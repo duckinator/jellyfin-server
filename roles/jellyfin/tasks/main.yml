@@ -5,7 +5,7 @@
   user:
     name: jellyfin
 
-- name: Install Jellyfin/Nginx config
+- name: Install Jellyfin configs (for systemd and nginx)
   synchronize:
     src: etc/
     dest: /etc/
@@ -44,3 +44,9 @@
     name: nginx
     state: restarted
     daemon_reload: yes
+
+- name: Enable and start Jellyfin service
+  systemd:
+    name: jellyfin
+    enabled: yes
+    state: started
