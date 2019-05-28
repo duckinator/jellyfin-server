@@ -17,7 +17,7 @@
     state: absent
 
 - name: Run certbot
-  command: /usr/bin/certbot -n --agree-tos --rsa-key-size 4096 --nginx -d media.smallest.dog -m me@duckie.co
+  command: /usr/bin/certbot -n --agree-tos --rsa-key-size 4096 --nginx -d media.smallest.dog -m me@duckie.co --webroot /srv/certbot
   args:
     creates: /etc/letsencrypt/live/media.smallest.dog/fullchain.pem
 
@@ -25,7 +25,7 @@
   cron:
     name: "run certbot"
     hour: 12
-    job: "/usr/bin/certbot renew --rsa-key-size 4096 --quiet"
+    job: "/usr/bin/certbot renew --rsa-key-size 4096 --webroot /srv/certbot --quiet"
 
 - name: Enable and start Nginx service
   systemd:

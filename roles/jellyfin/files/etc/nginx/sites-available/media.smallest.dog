@@ -38,16 +38,17 @@ server {
 }
 
 server {
-    location / {
-        include /etc/nginx/snippets/jellyfin-headers.conf;
-    }
-
-    if ($host = media.smallest.dog) {
-        return 301 https://$host$request_uri;
-    }
-
     listen 80 default_server;
     listen [::]:80 default_server;
     server_name media.smallest.dog;
-    return 404; # managed by Certbot
+
+    location /.well-known {
+        include /etc/nginx/snippets/jellyfin-headers.conf;
+        alias /srv/certbot/.well-known;
+    }
+
+    location / {
+        include /etc/nginx/snippets/jellyfin-headers.conf;
+        return 301 https://$host$request_uri$is_args$args;
+    }
 }
