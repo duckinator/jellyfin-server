@@ -39,6 +39,7 @@ server {
 
 server {
     if ($host = media.smallest.dog) {
+        include /etc/nginx/snippets/jellyfin-headers.conf;
         return 301 https://$host$request_uri;
     }
 
