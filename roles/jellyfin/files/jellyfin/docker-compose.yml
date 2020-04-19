@@ -1,7 +1,7 @@
 version: "3"
 services:
   jellyfin:
-    image: jellyfin/jellyfin:10.3.2
+    image: jellyfin/jellyfin:10.5.4
     volumes:
       - /mnt/jellyfin_data/config:/config
       - /mnt/jellyfin_data/cache:/cache
