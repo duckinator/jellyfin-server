@@ -16,7 +16,7 @@
 
 - name: Install libnss3-tools (for certutil)
   ansible.builtin.apt:
-    name: jellyfin
+    name: libnss3-tools
     state: present
 
 #- name: Add Jellyfin user
