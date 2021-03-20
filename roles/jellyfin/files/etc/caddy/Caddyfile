@@ -1,8 +1,10 @@
 # TODO: Figure out why I can't just use this: {system.hostname}
 media.canine.systems
 
-tls acme {
-    disable_http_challenge
+tls {
+    issuer acme {
+        disable_http_challenge
+    }
 }
 
 encode zstd gzip
