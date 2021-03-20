@@ -1,0 +1,14 @@
+- name: Add Caddy team GPG keys
+  ansible.builtin.apt_key:
+    url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
+
+- name: Add Caddy apt repo
+  ansible.builtin.apt_repository:
+    repo: deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+    filename: caddy
+    state: present
+
+- name: Install Caddy
+  ansible.builtin.apt:
+    update_cache: true
+    name: caddy

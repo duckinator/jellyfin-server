@@ -1,0 +1,5 @@
+- name: Install apt-transport-https
+  package:
+    name:
+      - apt-transport-https
+    state: present

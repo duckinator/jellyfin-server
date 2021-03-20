@@ -1,5 +1,3 @@
 ---
 dependencies:
   - { role: apt-transport-https }
-  - { role: caddy }
-  - { role: system-upgrade }

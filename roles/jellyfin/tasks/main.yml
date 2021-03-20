@@ -1,52 +1,23 @@
-- name: Install required python modules for Ansible
-  command: pip3 install docker-compose
+- name: Add Jellyfin team GPG keys
+  ansible.builtin.apt_key:
+    url: https://repo.jellyfin.org/jellyfin_team.gpg.key
 
-- name: Add Jellyfin user
-  user:
+- name: Add Jellyfin apt repo
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://repo.jellyfin.org/ubuntu focal main
+    filename: jellyfin
+    state: present
+
+- name: Install Jellyfin
+  ansible.builtin.apt:
+    update_cache: true
     name: jellyfin
 
-- name: Install Jellyfin configs (for systemd and nginx)
+#- name: Add Jellyfin user
+#  user:
+#    name: jellyfin
+
+- name: Install Jellyfin configs
   synchronize:
     src: etc/
     dest: /etc/
-
-- name: Install custom Jellyfin helper scripts
-  synchronize:
-    src: usr/
-    dest: /usr/
-
-- name: Install Jellyfin config and scripts
-  synchronize:
-    src: jellyfin/
-    dest: /usr/local/jellyfin/
-
-- name: Create Jellyfin directories
-  file:
-    path: "{{ item }}"
-    owner: jellyfin
-    state: directory
-  with_items:
-    - /mnt/jellyfin_data/config
-    - /mnt/jellyfin_data/cache
-    - /mnt/jellyfin_data/media
-
-- name: Enable Jellyfin Nginx config
-  file:
-    src: /etc/nginx/sites-available/media.smallest.dog
-    dest: /etc/nginx/sites-enabled/media.smallest.dog
-    state: link
-
-- name: Check Nginx config
-  command: nginx -t
-
-- name: Restart Nginx
-  systemd:
-    name: nginx
-    state: restarted
-    daemon_reload: yes
-
-- name: Enable and start Jellyfin service
-  systemd:
-    name: jellyfin
-    enabled: yes
-    state: started
