@@ -1,5 +1,9 @@
 # TODO: Figure out why I can't just use this: {system.hostname}
 media.canine.systems
 
+tls acme {
+    disable_http_challenge true
+}
+
 encode zstd gzip
 reverse_proxy 127.0.0.1:8096
