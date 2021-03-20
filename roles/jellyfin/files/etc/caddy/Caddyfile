@@ -2,7 +2,7 @@
 media.canine.systems
 
 tls acme {
-    disable_http_challenge true
+    disable_http_challenge
 }
 
 encode zstd gzip
