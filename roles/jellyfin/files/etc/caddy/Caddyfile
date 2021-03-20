@@ -1,7 +1,5 @@
-jellyfin.fox
-
-# Not currently exposed publicly.
-auto_https off # [off|disable_redirects]
+# Remove "http://" to enable automagic HTTPS.
+http://jellyfin.fox
 
 encode zstd gzip
 reverse_proxy 127.0.0.1:8096
