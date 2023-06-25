@@ -4,7 +4,7 @@
 
 - name: Add Jellyfin apt repo
   ansible.builtin.apt_repository:
-    repo: deb [arch=amd64] https://repo.jellyfin.org/ubuntu jammy main
+    repo: "deb [arch=amd64] https://repo.jellyfin.org/ubuntu {{ ansible_distribution_release }} main"
     filename: jellyfin
     state: present
 
